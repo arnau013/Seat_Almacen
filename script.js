@@ -14,6 +14,7 @@ function buscar(query) {
     (a["Suministrador/Fabricante"] && a["Suministrador/Fabricante"].toLowerCase().includes(query))
   );
 }
+
 document.addEventListener("DOMContentLoaded", async () => {
   await cargarDatos();
 
@@ -26,8 +27,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     resultsDiv.innerHTML = resultados.map(r => `
       <div class="item">
-        <strong>${r.nombre}</strong>
-        ID: ${r.id} | Precio: ${r.precio} €
+        <strong>${r["Descripción del material"] || "-"}</strong>
+        Material: ${r["Material"] || "-"}<br>
+        Pieza fabricante: ${r["Nº pieza fabricante"] || "-"}<br>
+        Proveedor: ${r["Suministrador/Fabricante"] || "-"}<br>
+        Ubicación: ${r["Ubic."] || "-"}<br>
+        Stock seg.: ${r["Stock de seguridad"] || "-"} | Valor stock: ${r["Valor.stock"] || "-"}
       </div>
     `).join("");
   });
