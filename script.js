@@ -8,10 +8,12 @@ async function cargarDatos() {
 function buscar(query) {
   query = query.toLowerCase();
   return articulos.filter(a => 
-    a.nombre.toLowerCase().includes(query)
+    (a["Material"] && a["Material"].toLowerCase().includes(query)) ||
+    (a["Descripción del material"] && a["Descripción del material"].toLowerCase().includes(query)) ||
+    (a["Nº pieza fabricante"] && a["Nº pieza fabricante"].toLowerCase().includes(query)) ||
+    (a["Suministrador/Fabricante"] && a["Suministrador/Fabricante"].toLowerCase().includes(query))
   );
 }
-
 document.addEventListener("DOMContentLoaded", async () => {
   await cargarDatos();
 
