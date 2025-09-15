@@ -1,4 +1,4 @@
-const CACHE_NAME = "buscador-articulos-v1";
+const CACHE_NAME = "buscador-articulos-v2";
 const urlsToCache = [
   "index.html",
   "script.js",
