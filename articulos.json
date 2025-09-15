@@ -1,5 +1,28 @@
 [
-  {"id": 1, "nombre": "Tornillo 12mm", "precio": 0.25},
-  {"id": 2, "nombre": "Tuerca M8", "precio": 0.15},
-  {"id": 3, "nombre": "Arandela 5mm", "precio": 0.05}
+  {
+    "Material": "10001234",
+    "Descripción del material": "Tornillo M8 x 20mm",
+    "TpMt": "ZREP",
+    "Grupo art.": "TORN",
+    "Alm.": "ALM01",
+    "UMB": "UND",
+    "Ubic.": "A12-3",
+    "Nº pieza fabricante": "T-M820",
+    "Suministrador/Fabricante": "ACME S.A.",
+    "Stock de seguridad": 50,
+    "Valor.stock": 125.5
+  },
+  {
+    "Material": "10005678",
+    "Descripción del material": "Tuerca M8 galvanizada",
+    "TpMt": "ZREP",
+    "Grupo art.": "TUER",
+    "Alm.": "ALM01",
+    "UMB": "UND",
+    "Ubic.": "B4-7",
+    "Nº pieza fabricante": "N-M8G",
+    "Suministrador/Fabricante": "BOLTEX",
+    "Stock de seguridad": 100,
+    "Valor.stock": 80.0
+  }
 ]
