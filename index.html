@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Buscador de Artículos</title>
   <link rel="manifest" href="manifest.json">
-  <script src="script.js" defer></script>
   <style>
     body { font-family: Arial, sans-serif; margin: 20px; background: #f9f9f9; }
     h1 { font-size: 20px; color: #333; }
@@ -23,7 +22,7 @@
   <!-- búsqueda simple arriba -->
   <input type="text" id="search" placeholder="Búsqueda rápida...">
 
-  <!-- botón para abrir panel -->
+  <!-- botón para abrir panel avanzado -->
   <button class="btn" id="toggleAdvanced">Búsqueda avanzada</button>
 
   <!-- panel búsqueda avanzada -->
@@ -46,8 +45,18 @@
     <button class="btn" id="applyFilters">Aplicar filtros</button>
   </div>
 
+  <!-- búsqueda por foto -->
+  <h3>Buscar por foto</h3>
+  <input type="file" accept="image/*" capture="camera" id="fotoInput">
+  <p id="ocrStatus"></p>
+
+  <!-- resultados -->
   <div id="results"></div>
+
+  <!-- Librería OCR Tesseract.js -->
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+
+  <!-- Tu script de la app -->
+  <script src="script.js"></script>
 </body>
 </html>
-
-
