@@ -9,7 +9,7 @@
   <style>
     body { font-family: Arial, sans-serif; margin: 20px; background: #f9f9f9; }
     h1 { font-size: 20px; color: #333; }
-    input, select { width: 100%; padding: 8px; margin: 5px 0; font-size: 14px; border: 1px solid #ccc; border-radius: 5px; }
+    input { width: 100%; padding: 8px; margin: 5px 0; font-size: 14px; border: 1px solid #ccc; border-radius: 5px; }
     .btn { background: #2196f3; color: white; border: none; padding: 10px; margin: 10px 0; cursor: pointer; border-radius: 5px; }
     .btn:hover { background: #1976d2; }
     .advanced { display: none; margin-top: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 5px; background: #fff; }
@@ -20,14 +20,17 @@
 <body>
   <h1>Buscador de Artículos</h1>
 
-  <!-- búsqueda simple -->
+  <!-- búsqueda simple arriba -->
   <input type="text" id="search" placeholder="Búsqueda rápida...">
 
-  <!-- botón para búsqueda avanzada -->
+  <!-- botón para abrir panel -->
   <button class="btn" id="toggleAdvanced">Búsqueda avanzada</button>
 
   <!-- panel búsqueda avanzada -->
   <div class="advanced" id="advancedSearch">
+    <label>Búsqueda rápida (texto libre en todas las columnas)</label>
+    <input type="text" id="filterGlobal">
+
     <label>Material</label>
     <input type="text" id="filterMaterial">
 
@@ -46,4 +49,5 @@
   <div id="results"></div>
 </body>
 </html>
+
 
