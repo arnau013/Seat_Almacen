@@ -6,7 +6,7 @@ async function cargarDatos() {
   console.log("Cargados", articulos.length, "artículos");
 }
 
-// búsqueda rápida (global)
+// 🔎 búsqueda rápida global
 function buscarSimple(query, data) {
   query = query.toLowerCase();
   return data.filter(a =>
@@ -18,7 +18,7 @@ function buscarSimple(query, data) {
   );
 }
 
-// búsqueda avanzada
+// 🔎 búsqueda avanzada
 function buscarAvanzado(filtros) {
   let data = articulos;
 
@@ -54,6 +54,17 @@ function mostrarResultados(lista) {
   }
 }
 
+// 📸 OCR con Tesseract.js
+async function ocrImagen(file) {
+  document.getElementById("ocrStatus").textContent = "Procesando imagen...";
+  const { data: { text } } = await Tesseract.recognize(file, 'spa+eng', {
+    logger: m => console.log(m) // opcional: ver progreso en consola
+  });
+  document.getElementById("ocrStatus").textContent = ""; // limpiar mensaje
+  return text;
+}
+
+// 🔄 eventos
 document.addEventListener("DOMContentLoaded", async () => {
   await cargarDatos();
 
@@ -63,13 +74,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     mostrarResultados(buscarSimple(query, articulos));
   });
 
-  // abrir/cerrar panel
+  // abrir/cerrar panel avanzado
   const advancedDiv = document.getElementById("advancedSearch");
   document.getElementById("toggleAdvanced").addEventListener("click", () => {
     advancedDiv.style.display = advancedDiv.style.display === "none" ? "block" : "none";
   });
 
-  // aplicar filtros
+  // aplicar filtros avanzados
   document.getElementById("applyFilters").addEventListener("click", () => {
     const filtros = {
       global: document.getElementById("filterGlobal").value.toLowerCase().trim(),
@@ -80,4 +91,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     };
     mostrarResultados(buscarAvanzado(filtros));
   });
+
+  // 📸 búsqueda por foto
+  const inputFoto = document.getElementById("fotoInput");
+  if (inputFoto) {
+    inputFoto.addEventListener("change", async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const texto = await ocrImagen(file);
+      mostrarResultados(buscarSimple(texto, articulos));
+    });
+  }
 });
+
