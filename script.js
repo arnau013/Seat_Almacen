@@ -6,20 +6,28 @@ async function cargarDatos() {
   console.log("Cargados", articulos.length, "artículos");
 }
 
-// 🔎 búsqueda rápida (como antes)
-function buscarSimple(query) {
+// búsqueda rápida (global)
+function buscarSimple(query, data) {
   query = query.toLowerCase();
-  return articulos.filter(a =>
+  return data.filter(a =>
     (a["Material"] && a["Material"].toLowerCase().includes(query)) ||
     (a["Descripción del material"] && a["Descripción del material"].toLowerCase().includes(query)) ||
     (a["Nº pieza fabricante"] && a["Nº pieza fabricante"].toLowerCase().includes(query)) ||
-    (a["Suministrador/Fabricante"] && a["Suministrador/Fabricante"].toLowerCase().includes(query))
+    (a["Suministrador/Fabricante"] && a["Suministrador/Fabricante"].toLowerCase().includes(query)) ||
+    (a["Instalación"] && a["Instalación"].toLowerCase().includes(query))
   );
 }
 
-// 🔎 búsqueda avanzada (filtros combinados)
+// búsqueda avanzada
 function buscarAvanzado(filtros) {
-  return articulos.filter(a => {
+  let data = articulos;
+
+  // si hay búsqueda global dentro del panel → se aplica primero
+  if (filtros.global) {
+    data = buscarSimple(filtros.global, data);
+  }
+
+  return data.filter(a => {
     return (!filtros.material || (a["Material"] && a["Material"].toLowerCase().includes(filtros.material))) &&
            (!filtros.proveedor || (a["Suministrador/Fabricante"] && a["Suministrador/Fabricante"].toLowerCase().includes(filtros.proveedor))) &&
            (!filtros.instalacion || (a["Instalación"] && a["Instalación"].toLowerCase().includes(filtros.instalacion))) &&
@@ -27,7 +35,7 @@ function buscarAvanzado(filtros) {
   });
 }
 
-// render de resultados
+// render resultados
 function mostrarResultados(lista) {
   const resultsDiv = document.getElementById("results");
   resultsDiv.innerHTML = lista.map(r => `
@@ -49,21 +57,22 @@ function mostrarResultados(lista) {
 document.addEventListener("DOMContentLoaded", async () => {
   await cargarDatos();
 
-  // búsqueda rápida
+  // búsqueda rápida superior
   document.getElementById("search").addEventListener("input", e => {
     const query = e.target.value.trim();
-    mostrarResultados(buscarSimple(query));
+    mostrarResultados(buscarSimple(query, articulos));
   });
 
-  // abrir/cerrar panel avanzado
+  // abrir/cerrar panel
   const advancedDiv = document.getElementById("advancedSearch");
   document.getElementById("toggleAdvanced").addEventListener("click", () => {
     advancedDiv.style.display = advancedDiv.style.display === "none" ? "block" : "none";
   });
 
-  // aplicar filtros avanzados
+  // aplicar filtros
   document.getElementById("applyFilters").addEventListener("click", () => {
     const filtros = {
+      global: document.getElementById("filterGlobal").value.toLowerCase().trim(),
       material: document.getElementById("filterMaterial").value.toLowerCase().trim(),
       proveedor: document.getElementById("filterProveedor").value.toLowerCase().trim(),
       instalacion: document.getElementById("filterInstalacion").value.toLowerCase().trim(),
@@ -72,4 +81,3 @@ document.addEventListener("DOMContentLoaded", async () => {
     mostrarResultados(buscarAvanzado(filtros));
   });
 });
-
